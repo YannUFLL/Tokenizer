@@ -1,0 +1,20 @@
+# Node modules
+code/node_modules
+
+# Compilation output
+code/dist
+
+# pnpm deploy output
+code/bundle
+
+# Hardhat Build Artifacts
+code/artifacts
+
+# Hardhat compilation (v2) support directory
+code/cache
+
+# Typechain output
+code/types
+
+# Hardhat coverage reports
+code/coverage
