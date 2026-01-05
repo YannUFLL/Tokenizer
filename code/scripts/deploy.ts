@@ -4,7 +4,7 @@ import { privateKeyToAccount } from 'viem/accounts'
 import {
   abi,
   bytecode,
-} from '../artifacts/contracts/ShlingueCoin42.sol/artifacts.json.js'
+} from '../artifacts/contracts/ShlingueCoin42.sol/SchlingueCoin42.json'
 
 async function main() {
   const account = privateKeyToAccount(
