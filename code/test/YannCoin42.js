@@ -2,55 +2,56 @@ const { expect } = require("chai");
 const hre = require("hardhat");
 const { parseEther } = require("viem");
 
-describe("Post-deployement verifications", function () {
-  it("The deployed contract must have the correct values", async function () {
-    const address = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; 
+describe("YannCoin42 Unit Tests", function () {
+  async function deployTokenFixture() {
+    const [owner, addr1, addr2] = await hre.viem.getWalletClients();
     
-    const artifact = await hre.artifacts.readArtifact("YannCoin42");
-    const abi = artifact.abi;
-
+    const token = await hre.viem.deployContract("YannCoin42", [
+  1000000n]);
+    
     const publicClient = await hre.viem.getPublicClient();
 
-    const name = await publicClient.readContract({
-      address,
-      abi,
-      functionName: 'name',
+    return { token, owner, addr1, addr2, publicClient };
+  }
+
+  describe("Deployment", function () {
+    it("Should have the correct name and symbol", async function () {
+      const { token } = await deployTokenFixture();
+      
+      expect(await token.read.name()).to.equal("YannCoin42");
+      expect(await token.read.symbol()).to.equal("YC42");
     });
 
-    console.log("Nom détecté :", name);
-    expect(name).to.equal("YannCoin42");
+    it("Should mint the total supply to the owner", async function () {
+      const { token, owner } = await deployTokenFixture();
+      const totalSupply = await token.read.totalSupply();
+      const ownerBalance = await token.read.balanceOf([owner.account.address]);
+      
+      expect(totalSupply).to.equal(ownerBalance);
+      expect(totalSupply).to.equal(parseEther("1000000"));
+    });
   });
 
-    it("We can use the deployed contract to transfert money", async function () {
-    const address = "0x5FbDB2315678afecb367f032d93F642f64180aa3"; 
-    
-    const artifact = await hre.artifacts.readArtifact("YannCoin42");
-    const abi = artifact.abi;
+  describe("Transactions", function () {
+    it("Should transfer tokens between accounts", async function () {
+      const { token, owner, addr1 } = await deployTokenFixture();
+      const amount = parseEther("42");
 
-    const publicClient = await hre.viem.getPublicClient();
-    const [owner, addr1] = await hre.viem.getWalletClients();
+      await token.write.transfer([addr1.account.address, amount]);
 
-    const transferAmount = parseEther("100");
-
-    console.log("Transferring", transferAmount, "YannCoin42 to addr1:", addr1.account.address);
-
-    const hash = await owner.writeContract({
-      address,
-      abi,
-      functionName: 'transfer',
-      args: [addr1.account.address, transferAmount],
+      const addr1Balance = await token.read.balanceOf([addr1.account.address]);
+      expect(addr1Balance).to.equal(amount);
     });
 
-    const receipt = await publicClient.waitForTransactionReceipt({ hash });
+    it("Should fail if sender doesn't have enough tokens", async function () {
+      const { token, addr1, addr2 } = await deployTokenFixture();
+      const initialBalance = await token.read.balanceOf([addr1.account.address]); // 0
 
-    const balance = await publicClient.readContract({
-  address,
-  abi,
-  functionName: 'balanceOf',
-  args: [addr1.account.address]
-});
-    console.log("addr1 balance after transfer:", balance, "YannCoin42");
-    expect(balance).to.equal(transferAmount);
-
+      await expect(
+        token.write.transfer([addr2.account.address, parseEther("1")], {
+          account: addr1.account,
+        })
+      ).to.be.rejected; 
+    });
   });
 });
