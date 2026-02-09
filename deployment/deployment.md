@@ -125,8 +125,8 @@ npx hardhat test --grep "Transactions"
 While unit tests guarantee the code logic, the actual deployment can be verified manually:
 
 * **Blockchain Explorer:** Search for the contract address on [Etherscan Sepolia](https://sepolia.etherscan.io/) to see the verified source code and the minting transaction.
-* **Wallet Interaction:** Use **MetaMask** to import the token and perform a manual transfer to verify the integration with standard Web3 tooling.
-
+* **Wallet Interaction:** Use **MetaMask** to import the token and perform a manual transfer to verify the integration with standard Web3 tooling
+(see whitepaper).
 ## 5. 📍 Deployment Info (Sepolia)
 * **Contract Address:** `0x005942821558a8a837cB25C5B34695a6855c6672`
 * **Explorer:** [View on Etherscan](https://sepolia.etherscan.io/token/0x005942821558a8a837cB25C5B34695a6855c6672)

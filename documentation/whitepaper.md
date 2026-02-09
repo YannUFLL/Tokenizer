@@ -23,10 +23,19 @@ Properly displaying a custom token can be tricky. This guide ensures you avoid c
 
 If you add the token and MetaMask displays `0.0000...` or an astronomical number, the **decimals** are likely misconfigured in the interface.
 
-1. Open MetaMask and navigate to the **Tokens** tab.
-2. Click **Import Tokens**, then select the **Custom Token** tab.
-3. Paste the Contract Address: `0x005942821558a8a837cB25C5B34695a6855c6672`.
-4. Confirm the import. You should now see your correct balance (e.g., `1,000,000 YC42`).
+1. Open **MetaMask**.
+2. Click on the **sidebar menu** (3 bars).
+3. Go to **Settings** -> **Advanced**.
+4. Activate **"Show test networks"**.
+5. Return to the **Home** screen.
+6. Navigate to the **Tokens** tab.
+7. Click on the **three dots** and select **Import Tokens**.
+8. Ensure the **Sepolia** blockchain is selected.
+9. Select the **Custom Token** tab.
+10. Paste the Contract Address: `0x005942821558a8a837cB25C5B34695a6855c6672`.
+11. Enter the symbol: **YC42**.
+12. Confirm the import. You should now see your correct balance (e.g., `1,000,000 YC42`).
+13. If the **token decimals** do not autofill correctly, manually enter **18**.
 
 ### 💸 Step 2: Sending YC42
 
@@ -52,7 +61,7 @@ The source code utilizes the **OpenZeppelin** library, the global industry stand
 ## 4. Useful Links
 
 * **Contract Address:** `0x005942821558a8a837cB25C5B34695a6855c6672`
-* **Block Explorer:** [View on Etherscan](https://www.google.com/search?q=https://sepolia.etherscan.io/address/0x005942821558a8a837cB25C5B34695a6855c6672)
+* **Block Explorer:** [View on Etherscan](https://sepolia.etherscan.io/address/0x005942821558a8a837cB25C5B34695a6855c6672)
 
 
 ## 5. Technical Characteristics
