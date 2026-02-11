@@ -13,13 +13,18 @@ contract MultiSig {
         bool executed;
         uint256 nbConfirmations;
     }
-    
+
     Transaction[] public transactions;
     uint256 public requiredConfirmations;
     
     mapping(address => bool) public isOwner;
     address[] public owners;
     mapping(uint256 => mapping(address => bool)) public isConfirmed;
+
+    modifier onlyOwner() {
+        require(isOwner[msg.sender], "Not an owner");
+        _;
+    }
 
     constructor(address[] memory _owners, uint256 _required) {
         require(_owners.length > 0, "Owners required");
@@ -62,7 +67,7 @@ contract MultiSig {
     function executeTransaction(uint256 _txIndex) external onlyOwner {
         Transaction storage transaction = transactions[_txIndex];
 
-        require(transaction.nbConfirmations >= requiredConfirmations, "Not enough confirmations"); // Example: quorum of 2
+        require(transaction.nbConfirmations >= requiredConfirmations, "Not enough confirmations");
         require(!transaction.executed, "Tx already executed");
 
         transaction.executed = true; // Secure against reentrancy

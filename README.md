@@ -24,7 +24,12 @@ The project is organized into three main directories to ensure clarity and scann
 
 ## 🛠 Tech Stack & Design Choices
 
-* **Language: Solidity 0.8.20** Chosen for its stability and compatibility with the latest EVM (Ethereum Virtual Machine) features. Using a recent version ensures protection against common legacy overflow issues.
-* **Framework: Hardhat + Ignition** Hardhat was selected for its robust testing environment. I used **Ignition** to manage deployments because it ensures "declarative" deployments—meaning it automatically handles contract verification on Etherscan and manages deployment states reliably.
-* **Library: OpenZeppelin (ERC20 Standard)** Industry-standard library used to guarantee security. By inheriting from OpenZeppelin’s `ERC20.sol`, the token is protected against common vulnerabilities (like reentrancy or mathematical errors) and is 100% compatible with wallets like MetaMask and exchanges.
-* **Network: Ethereum Sepolia Testnet** Selected as the most reliable environment for smart contract testing. It provides a realistic simulation of the Ethereum Mainnet without requiring real funds, allowing for a full demonstration of the token's lifecycle.
+* **Language: Solidity 0.8.20** Chosen for its stability and compatibility with the latest EVM features. This version includes native overflow protection, reducing the need for external math libraries.
+* **Framework: Hardhat + Ignition** Hardhat provides a robust environment for automation. I used **Ignition** for "declarative" deployments, ensuring reliable state management and automated contract verification on Etherscan.
+* **Library: OpenZeppelin (ERC20 Standard)** Industry-standard library used for the `YannCoin42` token. Inheriting from `ERC20.sol` ensures 100% compatibility with wallets (MetaMask) and exchanges while guaranteeing audited security.
+* **Security: Hardhat Configuration Variables (`vars`)** To avoid the security risks of `.env` files (such as accidental leaks to GitHub), I managed sensitive data like private keys and owner addresses using Hardhat’s built-in encrypted variable storage.
+* **Quality Assurance: Mocha & Chai** A comprehensive test suite was developed using **Mocha** and **Chai**. These tests validate critical logic such as access control (`onlyOwner`), quorum requirements, and protection against reentrancy.
+* **Network: Ethereum Sepolia Testnet** The contract was deployed and verified on Sepolia to demonstrate its real-world lifecycle. This allows for a full end-to-end demonstration (Submit → Confirm → Execute) on a live explorer.
+C'est une excellente idée de le mentionner. Les évaluateurs apprécient quand on montre qu'on connaît les outils de l'écosystème. Préciser que tu as utilisé un **PoW (Proof of Work) Faucet** montre que tu sais contourner la pénurie d'ETH de test qui touche parfois Sepolia.
+* **Funding: Sepolia PoW Faucet** To obtain test ETH, I used a Proof-of-Work faucet. This required running a local mining process to solve computational puzzles in exchange for Sepolia ETH, ensuring a reliable supply for deployment and transaction fees without depending on traditional "click-and-claim" faucets.
+

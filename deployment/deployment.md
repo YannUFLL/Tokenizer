@@ -42,7 +42,17 @@ npx hardhat vars set INFURA_API_KEY
 Metamask is a wallet manager. this allow to easly demonstrate the transfert of our token.
 
 ```bash 
-npx hardhat vars set SEPOLIA_PRIVATE_KEY 
+npx hardhat vars set OWNER_1_PRIVATE_KEY
+```
+
+**set other owners account (used in bonus)** 
+
+```bash
+npx hardhat vars set OWNER_2_PRIVATE_KEY
+```
+
+```bash
+npx hardhat vars set OWNER_3_PRIVATE_KEY
 ```
 
 \# Set your EtherSCAN Private API key, this allow to have the verified badge near to the token and display plainly the source code.
@@ -130,3 +140,29 @@ While unit tests guarantee the code logic, the actual deployment can be verified
 ## 5. 📍 Deployment Info (Sepolia)
 * **Contract Address:** `0x005942821558a8a837cB25C5B34695a6855c6672`
 * **Explorer:** [View on Etherscan](https://sepolia.etherscan.io/token/0x005942821558a8a837cB25C5B34695a6855c6672)
+
+### **4. BONUS: MultiSig utilisation** 
+
+Pour rendre ta documentation vraiment pro et impressionnante pour ton jury, il ne faut pas juste donner la commande, il faut expliquer **ce qu'ils vont voir** et **pourquoi c'est une preuve de sécurité**.
+
+Voici une structure clé en main pour remplir cette section :
+
+---
+
+### **4. BONUS: MultiSig Live Demonstration** 🚀
+
+To prove the security of the protocol, this script demonstrates a full transaction lifecycle on the **Sepolia Testnet**. Unlike a standard wallet, a MultiSig requires multiple approvals before moving any funds.
+
+#### **How to run it**
+
+```bash
+npx hardhat run scripts/demo-multisig.js --network sepolia
+
+```
+
+#### **What the script demonstrates:**
+
+1. **Transaction Proposal:** Owner 1 submits a request to transfer a specific amount of tokens. At this stage, the tokens are **not** moved; the transaction is simply "Pending" in the contract.
+2. **Quorum Enforcement:** The script attempts to execute the transaction with only one signature. The blockchain **reverts** the call, proving that the security rules are active.
+3. **Final Confirmation:** Owner 2 signs the transaction index.
+4. **Execution:** Once the threshold (2-of-3) is met, the transaction is executed, and the funds are actually transferred on-chain.
