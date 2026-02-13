@@ -62,9 +62,3 @@ To transfer tokens to another student or a peer-evaluator:
 
 * **Transparency & Trust:** The source code is fully **verified on Etherscan**, allowing for public auditing of all functions and ensuring there are no hidden "backdoors" or central points of control.
 * **Ecosystem Compatibility:** Built on the OpenZeppelin ERC-20 framework, YC42 is natively compatible with the entire Ethereum ecosystem, including MetaMask, hardware wallets, and Decentralized Exchanges (DEX).
-
-## 4. Technical Characteristics
- 
- * **Standard:** ERC-20 (OpenZeppelin implementation).
- * **Initial Supply**: 1,000,000 YC42.
- * **Decimals:** 18 (matching Ethereum's  precision).
