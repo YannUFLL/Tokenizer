@@ -13,7 +13,7 @@ async function main() {
   const tokenAbi = (await hre.artifacts.readArtifact("YannCoin42")).abi;
   const multiSigAbi = (await hre.artifacts.readArtifact("MultiSig")).abi;
 
-  console.log("\n  --- MULTISIG OPERATION: SECURE TRANSFER ---");
+  console.log("\n💸 --- MULTISIG OPERATION: SECURE TRANSFER ---");
 
   // 1. Prepare Transaction Data
   const amount = parseUnits("100", 18);

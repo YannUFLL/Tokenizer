@@ -12,7 +12,7 @@ async function main() {
   
   const tokenAbi = (await hre.artifacts.readArtifact("YannCoin42")).abi;
 
-  console.log("\n️  --- GOVERNANCE SETUP: INITIAL HANDOVER ---");
+  console.log("\n️🏦 --- GOVERNANCE SETUP: INITIAL HANDOVER ---");
 
   // --- Step 1: Ownership Transfer ---
   // We verify if the MultiSig already holds the 'onlyOwner' rights

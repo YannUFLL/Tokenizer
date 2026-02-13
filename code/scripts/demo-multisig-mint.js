@@ -13,7 +13,7 @@ async function main() {
   const tokenAbi = (await hre.artifacts.readArtifact("YannCoin42")).abi;
   const multiSigAbi = (await hre.artifacts.readArtifact("MultiSig")).abi;
 
-  console.log("\n  --- GOVERNANCE ACTION: MONETARY POLICY (MINT) ---");
+  console.log("\n🏦 --- GOVERNANCE ACTION: MONETARY POLICY (MINT) ---");
 
   // 1. Prepare Minting Data
   const mintAmount = parseUnits("500", 18);
