@@ -127,7 +127,13 @@ Simulates a transfer between two accounts and verifies balance updates.
 
 ```bash
 npx hardhat test --grep "Transactions"
+```
 
+**Check MutltiSig Contract**
+Test quorum requirement for a transaction
+
+```bash
+npx hardhat test test/MultiSig.js
 ```
 
 ### **3. Live Network Verification**

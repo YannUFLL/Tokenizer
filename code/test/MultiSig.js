@@ -33,7 +33,7 @@ describe("MultiSig Security Tests", function () {
 
     await expect(
       multiSig.write.executeTransaction([0n])
-    ).to.be.rejectedWith("cannot execute tx"); 
+    ).to.be.rejectedWith("Not enough confirmations"); 
   });
 
   it("Should execute a transaction when quorum is reached", async function () {

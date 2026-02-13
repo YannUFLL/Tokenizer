@@ -1,9 +1,19 @@
 # Tokenizer - YannCoin42 (YC42)
 
 ## 📌 Project Overview
-This project was developed as part of the **42 x BNB Chain** partnership. The goal was to build, test, and deploy a custom digital asset on a public blockchain while adhering to the **ERC-20 (BEP-20)** industry standards.
 
-**YannCoin42 (YC42)** is a fixed-supply token deployed on the **Ethereum Sepolia Testnet**, representing a secure and immutable asset within the 42 ecosystem.
+The goal was to build, test, and deploy a custom digital asset on a public blockchain while adhering to the **ERC-20** industry standards.
+
+**YannCoin42 (YC42)** YannCoin42 (YC42) is a decentralized digital asset developed to explore the architecture of smart contracts and on-chain governance. Deployed on the Ethereum Sepolia Testnet, this project demonstrates the implementation of a secure, governed token ecosystem adhering to the ERC-20 industry standard.
+
+Beyond a simple token, the project focuses on institutional-grade security by separating the asset logic from its administrative power through a custom-built governance laye
+
+
+**Multi-Signature Governance (bonus)**
+
+To eliminate any "Single Point of Failure", I developed and deployed a custom Multi-Signature (MultiSig) wallet. This contract acts as the official owner of the YC42 token.
+
+For any sensitive operation—such as adjusting the total supply—a majority of owners must sign the transaction on-chain. This architecture demonstrates a professional-grade security layer, mirroring the standards used by major protocols like Gnosis Safe to ensure decentralized and secure asset management.
 
 ---
 
@@ -19,8 +29,12 @@ The project is organized into three main directories to ensure clarity and scann
 ## 📍 Live Deployment Info
 
 * **Network:** Ethereum Sepolia Testnet
-* **Contract Address:** `0x005942821558a8a837cB25C5B34695a6855c6672`
-* **Explorer:** [View on Etherscan](https://www.google.com/search?q=https://sepolia.etherscan.io/address/0x005942821558a8a837cB25C5B34695a6855c6672)
+* **Contract YannCoin42 Address:** `0x35A2Aec877C4D547d7d5bc884292de95939DB185`
+* **Explorer:** [View on Etherscan](https://sepolia.etherscan.io/address/0x35A2Aec877C4D547d7d5bc884292de95939DB185)
+* **Contract MultiSig Adrress:**  `0xe7fC13C36CA3c37F2525815f61a2bA5755aC37A8`
+* **Explorer:** [View on Etherscan](https://sepolia.etherscan.io/address/0xe7fC13C36CA3c37F2525815f61a2bA5755aC37A8)
+
+
 
 ## 🛠 Tech Stack & Design Choices
 
@@ -31,4 +45,6 @@ The project is organized into three main directories to ensure clarity and scann
 * **Quality Assurance: Mocha & Chai** A comprehensive test suite was developed using **Mocha** and **Chai**. These tests validate critical logic such as access control (`onlyOwner`), quorum requirements, and protection against reentrancy.
 * **Network: Ethereum Sepolia Testnet** The contract was deployed and verified on Sepolia to demonstrate its real-world lifecycle. This allows for a full end-to-end demonstration (Submit → Confirm → Execute) on a live explorer.
 * **Funding: Sepolia PoW Faucet** To obtain test ETH, I used a Proof-of-Work faucet. This required running a local mining process to solve computational puzzles in exchange for Sepolia ETH, ensuring a reliable supply for deployment and transaction fees without depending on traditional "click-and-claim" faucets.
+* **Architecture: Ownership Transfer & Governance** Post-deployment, the ownership of the `YannCoin42` contract was transferred to the `MultiSig` contract. This ensures that no single private key (not even the deployer's) can unilaterally mint or burn tokens. Every administrative action must pass through the MultiSig's internal voting logic.
+* **Logic: Multi-Step Transaction Lifecycle** The MultiSig implementation follows a **Proposal -> Confirmation -> Execution** flow. This asynchronous process is a critical security standard in DeFi to prevent "fat-finger" errors and unauthorized transfers.
 
