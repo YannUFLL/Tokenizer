@@ -4,7 +4,7 @@
 
 **YannCoin42** is an experimental digital asset created as part of the *Tokenizer* project at 42.
 
-The concept is based on creating a digital currency that balances scarcity with governance. While the supply is initialized at 1,000,000 units, the contract includes Mint and Burn capabilities. This allows the MultiSig owners to adapt the monetary policy (e.g., offsetting loss or managing ecosystem growth) while maintaining the token's immutability regarding its core logic.
+The concept is based on creating a digital currency that balances scarcity with governance. While the supply is initialized at 1,000,000 units, the contract includes Mint and Burn capabilities. This allows the owner (or multiple owners via the MultiSig governance in the bonus) to adapt the monetary policy (e.g., offsetting loss or managing ecosystem growth) while maintaining the token's immutability regarding its core logic.
 
 The vision behind YC42 was to explore the constraints of decentralized ledger technology (DLT) and master the implementation of industry-standard protocols.
 
@@ -17,7 +17,7 @@ The vision behind YC42 was to explore the constraints of decentralized ledger te
 
 ## 2. User Guide: MetaMask Setup
 
-Properly displaying a custom token can be tricky. This guide ensures you avoid common UI errors regarding token units.
+Properly displaying a custom token can be tricky. This guide ensures you avoid common UI errors regarding token unitso
 
 
 ### 🛠️ Step 1: Adding the Token
@@ -53,13 +53,17 @@ To transfer tokens to another student or a peer-evaluator:
 
 ## 3. Security & Architecture
 
-* **Controlled Inflation/Deflation:** The total supply can be adjusted via `mint` and `burn` functions. However, these are strictly protected by the `onlyOwner` modifier, meaning no supply changes can occur without a MultiSig-validated quorum of owners
-* **Transparency:** The code is verified on the block explorer, allowing anyone to audit the functions and ensure there are no "backdoors."
-* **Reliability:** By inheriting from the ERC-20 standard, YC42 is compatible with all decentralized exchanges (DEX) and Web3 wallets.
+* **Controlled Inflation/Deflation:** The total supply can be adjusted via `mint` and `burn` functions. These are strictly protected by the `onlyOwner` modifier, ensuring the integrity of the token's value.
+* **Decentralized Custody (Bonus):** To eliminate the "Single Point of Failure" inherent in standard wallets, administrative control (contract onlyOwner) has been transferred to a custom **Multi-Signature (MultiSig) Vault**.
 
+    * **Consensus-Based Governance:** Critical operations—such as supply adjustments or ownership changes—require a **2-of-3 consensus** from independent authorized signers.
+
+    * **Enhanced Security:** This architecture ensures that even if a private key is compromised, the protocol remains secure, mirroring the custody standards of major institutional DeFi protocols.
+
+* **Transparency & Trust:** The source code is fully **verified on Etherscan**, allowing for public auditing of all functions and ensuring there are no hidden "backdoors" or central points of control.
+* **Ecosystem Compatibility:** Built on the OpenZeppelin ERC-20 framework, YC42 is natively compatible with the entire Ethereum ecosystem, including MetaMask, hardware wallets, and Decentralized Exchanges (DEX).
 
 ## 4. Technical Characteristics
- 
  
  * **Standard:** ERC-20 (OpenZeppelin implementation).
  * **Initial Supply**: 1,000,000 YC42.

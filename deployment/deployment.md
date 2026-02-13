@@ -1,4 +1,3 @@
-
 # Deployment 
 ## 1. 📋 Prerequisites
 
@@ -19,7 +18,7 @@ Ensure you have the following installed and configured:
 cd code 
 ```
 
-\# install depedencies
+\# install dependencies
 
 ```bash 
 npm install 
@@ -39,7 +38,7 @@ npx hardhat vars set INFURA_API_KEY
 
 
 \# Set your MetaMask Private Key (Account must have testnet tokens)
-Metamask is a wallet manager. this allow to easly demonstrate the transfert of our token.
+Metamask is a wallet manager. this allow to easly demonstrate the transfer of our token.
 
 ```bash 
 npx hardhat vars set OWNER_1_PRIVATE_KEY
@@ -62,9 +61,6 @@ npx hardhat vars set ETHERSCAN_API_KEY
 ```
 
 **Note:** These variables are stored locally on your machine, outside of the repository, ensuring zero risk of leaking keys to GitHub.
-
-
-
 
 ### **3\. Contract compilation **
 
@@ -89,12 +85,24 @@ npx hardhat node
 npx hardhat ignition deploy ignition/modules/YannCoin42.js --network localhost
 ```
 
+**bonus**:
+
+```bash
+npx hardhat ignition deploy ignition/modules/MultiSig.js --network localhost
+```
+
 ### **Public Testnet (Sepolia)**
 
 To deploy your token to the Ethereum Sepolia Testnet:
 
 ```bash
 npx hardhat ignition deploy ignition/modules/YannCoin42.js --network sepolia --verify
+```
+
+**bonus**:
+
+```bash
+npx hardhat ignition deploy ignition/modules/MultiSig.js --network sepolia --verify
 ```
 
 ## 4. 🧪 Interactions & Demonstration**
@@ -106,58 +114,55 @@ To ensure the integrity of the token, we use a suite of automated unit tests. Th
 This command will deploy the contract to a local instance and verify core functionalities (Name, Symbol, Total Supply, and Transfer logic).
 
 ```bash
-npx hardhat test
-
+npx hardhat test test/YannCoin42.js
 ```
 
 ### **2. Specific Test Cases**
 
 If you want to verify specific features of the contract as mentioned in the documentation:
 
+These tests are executed on a temporary, in-memory Hardhat network created specifically for the test execution.
+
+* **Isolated State:** This is NOT the persistent local node (started via ```npx hardhat node```); it is a fresh environment that is destroyed immediately after the tests finish.
+
+* **No Cost:** It does not require Sepolia ETH or any external connection.
+
+* **Safety:** It guarantees that your tests always start from a clean state without affecting any live deployments.
+
+
 **Check Contract metadata:**
 Verifies that the token is correctly initialized with the name "YannCoin42" and symbol "YC42".
 
 ```bash
-npx hardhat test --grep "Deployment"
-
+npx hardhat test test/YannCoin42.js --grep "Deployment"
 ```
 
 **Check Transfer functionality:**
 Simulates a transfer between two accounts and verifies balance updates.
 
 ```bash
-npx hardhat test --grep "Transactions"
+npx hardhat test test/YannCoin42 --grep "Transactions"
 ```
 
-**Check MutltiSig Contract**
-Test quorum requirement for a transaction
+**Check MultiSig Contract (bonus):**
+Verifies quorum requirement for a transaction.
 
 ```bash
 npx hardhat test test/MultiSig.js
 ```
 
-### **3. Live Network Verification**
 
-While unit tests guarantee the code logic, the actual deployment can be verified manually:
-
-* **Blockchain Explorer:** Search for the contract address on [Etherscan Sepolia](https://sepolia.etherscan.io/) to see the verified source code and the minting transaction.
-* **Wallet Interaction:** Use **MetaMask** to import the token and perform a manual transfer to verify the integration with standard Web3 tooling
-(see whitepaper).
-## 5. 📍 Deployment Info (Sepolia)
-* **Contract Address:** `0x005942821558a8a837cB25C5B34695a6855c6672`
-* **Explorer:** [View on Etherscan](https://sepolia.etherscan.io/token/0x005942821558a8a837cB25C5B34695a6855c6672)
-
-### **4. BONUS: MultiSig utilisation** 
-
-Pour rendre ta documentation vraiment pro et impressionnante pour ton jury, il ne faut pas juste donner la commande, il faut expliquer **ce qu'ils vont voir** et **pourquoi c'est une preuve de sécurité**.
-
-Voici une structure clé en main pour remplir cette section :
-
----
-
-### **4. BONUS: MultiSig Live Demonstration** 🚀
+### **3. BONUS: MultiSig Live Demonstration** 🚀
 
 To prove the security of the protocol, this script demonstrates a full transaction lifecycle on the **Sepolia Testnet**. Unlike a standard wallet, a MultiSig requires multiple approvals before moving any funds.
+
+#### **What the script demonstrates:**
+
+* **Dynamic Setup & Governance Handover:** * **Automatic Ownership Check:** The script verifies if the MultiSig is already the owner. If not, it performs a live `transferOwnership` from the Deployer to the MultiSig.
+* **Smart Funding (Treasury Management):** It checks the MultiSig’s balance. If empty, it automatically transfers the initial supply to the MultiSig treasury.
+* **Transaction Proposal:** Owner 1 submits a request to transfer tokens. At this stage, funds remain locked; the transaction is only "Pending".
+* **Quorum Enforcement:** The script demonstrates that a single signature is insufficient to move funds, proving the security rules are active on the blockchain.
+* **Final Confirmation & Execution:** Once the threshold (2-of-3) is met, the transaction is executed, and the transfer is finalized on-chain.
 
 #### **How to run it**
 
@@ -166,9 +171,10 @@ npx hardhat run scripts/demo-multisig.js --network sepolia
 
 ```
 
-#### **What the script demonstrates:**
+## 5. 📍 Deployment Info (Sepolia)
+* **Contract YannCoin42 Address:** `0x35A2Aec877C4D547d7d5bc884292de95939DB185`
+* **Explorer:** [View on Etherscan](https://sepolia.etherscan.io/token/0x35A2Aec877C4D547d7d5bc884292de95939DB185)
+* **Contract MultiSig Address:**  `0xe7fC13C36CA3c37F2525815f61a2bA5755aC37A8`
+* **Explorer:** [View on Etherscan](https://sepolia.etherscan.io/address/0xe7fC13C36CA3c37F2525815f61a2bA5755aC37A8)
 
-1. **Transaction Proposal:** Owner 1 submits a request to transfer a specific amount of tokens. At this stage, the tokens are **not** moved; the transaction is simply "Pending" in the contract.
-2. **Quorum Enforcement:** The script attempts to execute the transaction with only one signature. The blockchain **reverts** the call, proving that the security rules are active.
-3. **Final Confirmation:** Owner 2 signs the transaction index.
-4. **Execution:** Once the threshold (2-of-3) is met, the transaction is executed, and the funds are actually transferred on-chain.
+

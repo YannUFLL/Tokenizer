@@ -30,8 +30,8 @@ The project is organized into three main directories to ensure clarity and scann
 
 * **Network:** Ethereum Sepolia Testnet
 * **Contract YannCoin42 Address:** `0x35A2Aec877C4D547d7d5bc884292de95939DB185`
-* **Explorer:** [View on Etherscan](https://sepolia.etherscan.io/address/0x35A2Aec877C4D547d7d5bc884292de95939DB185)
-* **Contract MultiSig Adrress:**  `0xe7fC13C36CA3c37F2525815f61a2bA5755aC37A8`
+* **Explorer:** [View on Etherscan](=https://sepolia.etherscan.io/address/0x35A2Aec877C4D547d7d5bc884292de95939DB185)
+* **Contract MultiSig Address:**  `0xe7fC13C36CA3c37F2525815f61a2bA5755aC37A8`
 * **Explorer:** [View on Etherscan](https://sepolia.etherscan.io/address/0xe7fC13C36CA3c37F2525815f61a2bA5755aC37A8)
 
 
