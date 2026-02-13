@@ -30,7 +30,7 @@ We use Hardhat's built-in configuration variables to keep private keys secure. *
 
 **Note:** If you don't have these keys yet, you can create free accounts on Infura and Etherscan to generate them. They are essential for interacting with public testnets.
 
-\# the infura etherum node network provide access to the sepolia testnet in a simple and easy way
+\# The infura etherum node network provide access to the sepolia testnet in a simple and easy way
 
 ```bash 
 npx hardhat vars set INFURA_API_KEY
@@ -38,7 +38,7 @@ npx hardhat vars set INFURA_API_KEY
 
 
 \# Set your MetaMask Private Key (Account must have testnet tokens)
-Metamask is a wallet manager. this allow to easly demonstrate the transfer of our token.
+Metamask is a wallet manager. this allows for an easy demonstration of our token.
 
 ```bash 
 npx hardhat vars set OWNER_1_PRIVATE_KEY
@@ -109,7 +109,7 @@ npx hardhat ignition deploy ignition/modules/MultiSig.js --network sepolia --ver
 
 To ensure the integrity of the token, we use a suite of automated unit tests. These tests are executed on a local Hardhat network to guarantee instant feedback and a clean state for every test case.
 
-### **1. Run Automated Unit Tests**
+### 1. Run Automated Unit Tests
 
 This command will deploy the contract to a local instance and verify core functionalities (Name, Symbol, Total Supply, and Transfer logic).
 
@@ -117,7 +117,7 @@ This command will deploy the contract to a local instance and verify core functi
 npx hardhat test test/YannCoin42.js
 ```
 
-### **2. Specific Test Cases**
+### 2. Specific Test Cases
 
 If you want to verify specific features of the contract as mentioned in the documentation:
 
@@ -151,24 +151,40 @@ Verifies quorum requirement for a transaction.
 npx hardhat test test/MultiSig.js
 ```
 
+### 3. Live Demonstration Suite
 
-### **3. BONUS: MultiSig Live Demonstration** 🚀
+Once the contracts are deployed, use these scripts to demonstrate the security and flexibility of the YC42 ecosystem. These scripts are **network-agnostic**. While the examples below use --network sepolia, you can also run them against --network localhost if you are running a local node for development.
 
-To prove the security of the protocol, this script demonstrates a full transaction lifecycle on the **Sepolia Testnet**. Unlike a standard wallet, a MultiSig requires multiple approvals before moving any funds.
+#### **Step A: Handover & Initialization**
 
-#### **What the script demonstrates:**
+Before any operation, the system must be decentralized. This script automates the transition from a single-player setup to Multi-Signature governance.
 
-* **Dynamic Setup & Governance Handover:** * **Automatic Ownership Check:** The script verifies if the MultiSig is already the owner. If not, it performs a live `transferOwnership` from the Deployer to the MultiSig.
-* **Smart Funding (Treasury Management):** It checks the MultiSig’s balance. If empty, it automatically transfers the initial supply to the MultiSig treasury.
-* **Transaction Proposal:** Owner 1 submits a request to transfer tokens. At this stage, funds remain locked; the transaction is only "Pending".
-* **Quorum Enforcement:** The script demonstrates that a single signature is insufficient to move funds, proving the security rules are active on the blockchain.
-* **Final Confirmation & Execution:** Once the threshold (2-of-3) is met, the transaction is executed, and the transfer is finalized on-chain.
-
-#### **How to run it**
-
+* **Key Actions:** Performs a live `transferOwnership` to the MultiSig and funds the Treasury with the initial supply.
+* **Run:** 
 ```bash
-npx hardhat run scripts/demo-multisig.js --network sepolia
+npx hardhat run scripts/setup-governance.js --network sepolia
+```
 
+#### **Step B: Secure Treasury Operations (Daily Banking)**
+
+Demonstrates how the MultiSig manages existing funds. It proves that a single owner cannot move assets alone.
+
+* **Key Actions:** Proposes a transfer, collects a 2-of-3 quorum, and executes the transaction on-chain.
+* **Run:** 
+```bash
+npx hardhat run scripts/demo-multisig-transfer.js --network sepolia
+```
+
+
+
+#### **Step C: Monetary Policy (Central Bank Governance)**
+
+Demonstrates the highest level of administrative control: altering the token's total supply.
+
+* **Key Actions:** Proposes a `mint` of 500 new tokens, showing that the `onlyOwner` modifier now strictly obeys the MultiSig consensus.
+* **Run:** 
+```bash
+npx hardhat run scripts/demo-multisig-mint.js --network sepolia
 ```
 
 ## 5. 📍 Deployment Info (Sepolia)
