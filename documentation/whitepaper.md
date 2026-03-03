@@ -61,4 +61,37 @@ To transfer tokens to another student or a peer-evaluator:
     * **Enhanced Security:** This architecture ensures that even if a private key is compromised, the protocol remains secure, mirroring the custody standards of major institutional DeFi protocols.
 
 * **Transparency & Trust:** The source code is fully **verified on Etherscan**, allowing for public auditing of all functions and ensuring there are no hidden "backdoors" or central points of control.
+  
 * **Ecosystem Compatibility:** Built on the OpenZeppelin ERC-20 framework, YC42 is natively compatible with the entire Ethereum ecosystem, including MetaMask, hardware wallets, and Decentralized Exchanges (DEX).
+
+## 4. Technical Interface (ERC-20 & Security)
+
+### 🔹 Public Read Functions (View)
+
+* **`name()`**: Returns the full name of the token (`YannCoin42`).
+* **`symbol()`**: Returns the ticker (`YC42`).
+* **`decimals()`**: Returns the number of decimals used (default is **18**).
+* **`totalSupply()`**: Returns the total amount of tokens currently in existence.
+* **`balanceOf(address account)`**: Returns the token balance of a specific wallet address.
+* **`allowance(address owner, address spender)`**: Returns the remaining number of tokens that a `spender` is allowed to withdraw from the `owner`'s wallet.
+
+### 🔸 Standard Transactions (Write)
+
+* **`transfer(address to, uint256 value)`**: Moves `value` tokens from your wallet to the recipient. Returns a boolean.
+* **`approve(address spender, uint256 value)`**: Grants permission to a `spender` (like a DEX) to move up to `value` tokens from your wallet.
+* **`transferFrom(address from, address to, uint256 value)`**: Moves tokens using the allowance mechanism. This is the core function for decentralized applications (dApps).
+
+### 🔸 Administrative & Security Functions (Owner Only)
+
+* **`mint(address to, uint256 amount)`**: Creates new tokens and sends them to the specified address. Protected by the `onlyOwner` modifier.
+* **`burn(uint256 amount)`**: Destroys tokens from the caller's wallet, reducing the total supply.
+* **`transferOwnership(address newOwner)`**: Transfers administrative rights (e.g., to the MultiSig vault).
+* **`owner()`**: Returns the address of the current contract owner (The MultiSig wallet in our case).
+
+### 📢 Blockchain Events (Logs)
+
+These events are emitted on-chain and allow interfaces like MetaMask or Etherscan to track movements in real-time:
+
+* **`Transfer(address indexed from, address indexed to, uint256 value)`**: Triggered on every token movement.
+* **`Approval(address indexed owner, address indexed spender, uint256 value)`**: Triggered when a new allowance is set.
+* **`OwnershipTransferred(address indexed previousOwner, address indexed newOwner)`**: Triggered when the administrative control changes.
